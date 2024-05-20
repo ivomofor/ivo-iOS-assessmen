@@ -13,6 +13,7 @@ class EngineersTableViewController: UITableViewController, UIPopoverPresentation
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationController()
+        tableView.reloadData()
     }
 
     private func setupNavigationController() {
@@ -29,6 +30,7 @@ class EngineersTableViewController: UITableViewController, UIPopoverPresentation
     @objc func orderByTapped() {
         guard let from = navigationItem.rightBarButtonItem else { return }
         let controller = OrderByTableViewController(style: .plain)
+        controller.setOrderByHander(delegate: self)
         let size = CGSize(width: 200,
                           height: 150)
 
@@ -66,12 +68,20 @@ class EngineersTableViewController: UITableViewController, UIPopoverPresentation
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: GlucodianTableViewCell.self)) as? GlucodianTableViewCell
         cell?.setUp(with: engineers[indexPath.row].name, role: engineers[indexPath.row].role)
+        cell?.loadProfileImageIfCached(with: engineers[indexPath.row].ID)
         cell?.accessoryType = .disclosureIndicator
         return cell ?? UITableViewCell()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = QuestionsViewController.loadController(with: engineers[indexPath.row].questions)
+        let controller = QuestionsViewController.loadController(with: engineers[indexPath.row])
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+extension EngineersTableViewController: Sortable {
+    func sort(with orderBy: OrderBy) {
+        Engineer.sort(orderBy: orderBy, engineers: &self.engineers)
+        tableView.reloadData()
     }
 }

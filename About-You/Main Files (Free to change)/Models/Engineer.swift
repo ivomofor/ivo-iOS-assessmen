@@ -1,9 +1,10 @@
 import UIKit
 
 struct Engineer {
+    var ID: String
     var name: String
     var role: String
-    var defualtImageName: String
+    var defaultImageName: String
     var quickStats: QuickStats
     var questions: [Question]
 }
@@ -17,9 +18,10 @@ struct QuickStats {
 extension Engineer {
     static func testingData() -> [Engineer] {
         return [
-            Engineer(name: "Reenen",
+            Engineer(ID: "5265656E656E",
+                     name: "Reenen",
                      role: "Dev manager",
-                     defualtImageName: "",
+                     defaultImageName: "",
                      quickStats: QuickStats(years: 6, coffees: 5400, bugs: 1800),
                      questions: [
                         MainQuestions.questionOne(answer: Answer(text: "6am", index: 0)),
@@ -29,9 +31,10 @@ extension Engineer {
                         MainQuestions.questionFive(answer: Answer(text: "Watch or read a tutorial", index: 3))
                      ]),
 
-            Engineer(name: "Wilmar",
+            Engineer(ID: "57696C6D6172",
+                     name: "Wilmar",
                      role: "Head of Engineering",
-                     defualtImageName: "",
+                     defaultImageName: "",
                      quickStats: QuickStats(years: 15, coffees: 4000, bugs: 4000),
                      questions: [
                         MainQuestions.questionOne(answer: Answer(text: "midnight", index: 3)),
@@ -41,9 +44,10 @@ extension Engineer {
                         MainQuestions.questionFive(answer: Answer(text: "Call a coworker or friend", index: 2))
                      ]),
 
-            Engineer(name: "Eben",
+            Engineer(ID: "4562656E",
+                     name: "Eben",
                      role: "Head of Testing",
-                     defualtImageName: "",
+                     defaultImageName: "",
                      quickStats: QuickStats(years: 14, coffees: 1000, bugs: 100),
                      questions: [
                         MainQuestions.questionOne(answer: Answer(text: "midnight", index: 3)),
@@ -53,9 +57,10 @@ extension Engineer {
                         MainQuestions.questionFive(answer: Answer(text: "Watch or read a tutorial", index: 3))
                      ]),
 
-            Engineer(name: "Stefan",
+            Engineer(ID: "53746566616E",
+                     name: "Stefan",
                      role: "Senior dev",
-                     defualtImageName: "",
+                     defaultImageName: "",
                      quickStats: QuickStats(years: 7, coffees: 9000, bugs: 700),
                      questions: [
                         MainQuestions.questionOne(answer: Answer(text: "6am", index: 0)),
@@ -65,9 +70,10 @@ extension Engineer {
                         MainQuestions.questionFive(answer: Answer(text: "Visit Stack Overflow", index: 0))
                      ]),
 
-            Engineer(name: "Brandon",
+            Engineer(ID: "4272616E646F6E",
+                     name: "Brandon",
                      role: "Senior dev",
-                     defualtImageName: "",
+                     defaultImageName: "",
                      quickStats: QuickStats(years: 9, coffees: 99999, bugs: 99999),
                      questions: [
                         MainQuestions.questionOne(answer: Answer(text: "6am", index: 0)),
@@ -77,9 +83,10 @@ extension Engineer {
                         MainQuestions.questionFive(answer: Answer(text: "Visit Stack Overflow", index: 0))
                      ]),
 
-            Engineer(name: "Henri",
+            Engineer(ID: "48656E7269",
+                     name: "Henri",
                      role: "Senior dev",
-                     defualtImageName: "",
+                     defaultImageName: "",
                      quickStats: QuickStats(years: 10, coffees: 1800, bugs: 1000),
                      questions: [
                         MainQuestions.questionOne(answer: Answer(text: "6am", index: 0)),
@@ -89,5 +96,28 @@ extension Engineer {
                         MainQuestions.questionFive(answer: Answer(text: "Go down a google rabbit hole", index: 4))
                      ])
         ]
+    }
+    
+    static func sort(orderBy: OrderBy, engineers: inout [Engineer]) {
+        switch orderBy {
+        case .years:
+            print("years")
+            engineers.sort { (lhs: Engineer, rhs: Engineer) -> Bool in
+                // you can have additional code here
+                return lhs.quickStats.years > rhs.quickStats.years
+            }
+        case .coffees:
+            print("coffees")
+            engineers.sort { (lhs: Engineer, rhs: Engineer) -> Bool in
+                // you can have additional code here
+                return lhs.quickStats.coffees > rhs.quickStats.coffees
+            }
+        case .bugs:
+            print("bugs")
+            engineers.sort { (lhs: Engineer, rhs: Engineer) -> Bool in
+                // you can have additional code here
+                return lhs.quickStats.bugs > rhs.quickStats.bugs
+            }
+        }
     }
 }

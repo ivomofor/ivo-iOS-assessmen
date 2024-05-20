@@ -15,7 +15,7 @@ class QuestionCardView: UIView {
         self.selectedIndex = selectedIndex
         for (index, optionText) in options.enumerated() {
             addOption(with: optionText,
-                      addSeperator: index > options.count - 1,
+                      addSeperator: index < options.count - 1,
                       setSelected: index == selectedIndex)
         }
     }
@@ -44,6 +44,7 @@ class QuestionCardView: UIView {
         }
 
         if setSelected {
+            currentSelection = optionView
             optionView.applySelectionStyling()
         }
     }

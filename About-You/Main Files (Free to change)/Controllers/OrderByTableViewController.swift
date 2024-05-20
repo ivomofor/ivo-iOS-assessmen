@@ -1,6 +1,17 @@
 import UIKit
 
+enum OrderBy: Int {
+    case years = 0
+    case coffees
+    case bugs
+}
+
+protocol Sortable: NSObject {
+    func sort(with index: OrderBy)
+}
+
 class OrderByTableViewController: UITableViewController {
+    private weak var delegate: Sortable?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +40,14 @@ class OrderByTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.delegate?.sort(with: OrderBy(rawValue: indexPath.row) ?? .years)
+        dismiss(animated: true)
     }
 
+}
+
+extension OrderByTableViewController {
+    func setOrderByHander(delegate: Sortable) {
+        self.delegate = delegate
+    }
 }
